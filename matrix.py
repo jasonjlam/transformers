@@ -48,3 +48,34 @@ def newMatrix(rows = 4, cols = 4):
 
 def addPoint(matrix, x, y, z= 0):
     matrix.append([x,y,z, 1])
+
+def scaleMatrix(sx, sy, sz):
+    mat = newMatrix(4,0)
+    mat.append([sx, 0, 0, 0])
+    mat.append([0, sy, 0, 0])
+    mat.append([0, 0, sz, 0])
+    mat.append([0, 0, 0, 1])
+    return mat
+
+def translateMatrix(tx, ty, tz):
+    mat = newMatrix(4,0)
+    mat.append([1, 0, 0, tx])
+    mat.append([0, 1, 0, ty])
+    mat.append([0, 0, 1, tz])
+    mat.append([0, 0, 0, 1])
+
+def rotateMatrix(axis, theta):
+    if axis = x:
+        mat.append(0,1,)
+        mat.append([0, Math.cos(theta), Math.sin(theta), 0, 0])
+        mat.append([-Math.sin(theta), Math.cos(theta), 0, 0])
+    if axis = y:
+        mat.append([Math.sin(theta), 0, Math.cos(theta), 0])
+        mat.append([0,1,0,0])
+        mat.append([Math.cos(theta), -Math.sin(theta), 0, 0])
+        mat.append([0,0,0,1])
+    if axis = z:
+        mat.append([Math.cos(theta), Math.sin(theta), 0, 0])
+        mat.append([-Math.sin(theta), Math.cos(theta), 0, 0])
+        mat.append([0, 0, 1, 0])
+        mat.append([0, 0, 0, 1])
