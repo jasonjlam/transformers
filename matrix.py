@@ -21,6 +21,7 @@ def identity( matrix ):
                 matrix[c][r] = 1
             else:
                 matrix[c][r] = 0
+    return matrix
 
 #multiply m1 by m2, modifying m2 to be the product
 #m1 * m2 -> m2
@@ -32,7 +33,7 @@ def matrixMulti( m1, m2 ):
             i = 0
             for x in range(0,4):
                 # print("{}*{}".format(m1[x][r], m2[c][x]))
-                i += (m1[x][r] * m2[c][x])
+                i += m1[x][r] * m2[c][x]
                 # print(i)
             temp.append(i)
         m2[c] = temp
@@ -51,31 +52,35 @@ def addPoint(matrix, x, y, z= 0):
 
 def scaleMatrix(sx, sy, sz):
     mat = newMatrix(4,0)
-    mat.append([sx, 0, 0, 0])
-    mat.append([0, sy, 0, 0])
-    mat.append([0, 0, sz, 0])
+    mat.append([int(sx), 0, 0, 0])
+    mat.append([0, int(sy), 0, 0])
+    mat.append([0, 0, int(sz), 0])
     mat.append([0, 0, 0, 1])
     return mat
 
 def translateMatrix(tx, ty, tz):
     mat = newMatrix(4,0)
-    mat.append([1, 0, 0, tx])
-    mat.append([0, 1, 0, ty])
-    mat.append([0, 0, 1, tz])
-    mat.append([0, 0, 0, 1])
+    mat.append([1, 0, 0, 0])
+    mat.append([0, 1, 0, 0])
+    mat.append([0, 0, 1, 0])
+    mat.append([int(tx), int(ty), int(tz), 1])
+    return mat
 
 def rotateMatrix(axis, theta):
-    if axis = x:
-        mat.append(0,1,)
-        mat.append([0, Math.cos(theta), Math.sin(theta), 0, 0])
-        mat.append([-Math.sin(theta), Math.cos(theta), 0, 0])
-    if axis = y:
-        mat.append([Math.sin(theta), 0, Math.cos(theta), 0])
+    mat = newMatrix(4,0)
+    theta = math.radians(theta)
+    if axis == "x":
+        mat.append([1, 0,0,0])
+        mat.append([0, math.sin(theta), math.cos(theta), 0])
+        mat.append([0, math.cos(theta), -math.sin(theta), 0])
+    if axis == "y":
+        mat.append([math.sin(theta), 0, math.cos(theta), 0])
         mat.append([0,1,0,0])
-        mat.append([Math.cos(theta), -Math.sin(theta), 0, 0])
-        mat.append([0,0,0,1])
-    if axis = z:
-        mat.append([Math.cos(theta), Math.sin(theta), 0, 0])
-        mat.append([-Math.sin(theta), Math.cos(theta), 0, 0])
+        mat.append([math.cos(theta), 0, -math.sin(theta), 0])
+    if axis == "z":
+        mat.append([math.cos(theta), math.sin(theta), 0, 0])
+        mat.append([-math.sin(theta), math.cos(theta), 0, 0])
         mat.append([0, 0, 1, 0])
-        mat.append([0, 0, 0, 1])
+    mat.append([0, 0, 0, 1])
+    printMatrix(mat)
+    return mat

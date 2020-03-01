@@ -1,6 +1,9 @@
 import array
 import math
 from matrix import *
+from subprocess import Popen, PIPE
+from os import remove
+
 pixels = [0]
 w = 0
 h = 0
@@ -26,8 +29,8 @@ def writeImage(path):
 
 def clearpixels():
     global pixels
-    for pixel in pixels:
-        pixel = 255;
+    for x in range(len(pixels)):
+        pixels[x] = 255;
 
 def colorPixel (x, y, color):
     index = (w * y + x) * 3
@@ -102,20 +105,18 @@ def addEdge ( matrix, x0, y0, z0, x1, y1, z1 ):
 
 def drawEdges(matrix, color):
     for i in range(0, int(math.floor(len(matrix))/2 - 1)):
-        drawLine([matrix[i*2][0], matrix[i*2][1]], [matrix[i*2 + 1][0], matrix[i*2 +1][1]], color)
+        drawLine([matrix[i*2][0], matrix[i*2][1]], [matrix[i*2+1][0], matrix[i*2 +1][1]], color)
 
-def saveExtension( pixels, fname ):
-    ppm_name = fname[:fname.find('.')] + '.ppm'
-    save_ppm_ascii( pixels, ppm_name )
-    p = Popen( ['convert', ppm_name, fname ], stdin=PIPE, stdout = PIPE )
+def saveExtension(fname ):
+    ppmName = fname[:fname.find('.')] + '.ppm'
+    writeImage(ppmName)
+    p = Popen( ["magick convert", ppmName, fname ], stdin=PIPE, stdout = PIPE )
     p.communicate()
-    remove(ppm_name)
+    remove(ppmName)
 
-def display( pixels ):
-    ppm_name = 'pic.ppm'
-    save_ppm_ascii( pixels, ppm_name )
-    p = Popen( ['display', ppm_name], stdin=PIPE, stdout = PIPE )
+def display():
+    ppmName = 'pic.ppm'
+    writeImage(ppmName )
+    p = Popen( ['imdisplay', ppmName], stdin=PIPE, stdout = PIPE )
     p.communicate()
-    remove(ppm_name)
-
-# .tofile(fd)
+    remove(ppmName)
